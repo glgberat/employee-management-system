@@ -12,7 +12,7 @@ INSERT INTO role (title, salary, department_id) VALUES ("Account Manager", 65000
 INSERT INTO role (title, salary, department_id) VALUES ("Lawyer", 75000, 4);
 
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Xiaoyan", "Zhang", 2, 1 );
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Xiaoyan", "Zhang", 2, 1);
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Kenan", "Huyuk", 5, 1);
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Fatih", "Topal", 5, 3 );
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("He", "Huang",4 , 4 );
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Fatih", "Topal", 5, 3);
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("He", "Huang", 4 , 4);
