@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS employeetrack;
+CREATE DATABASE employeetrack;
+USE employeetrack;
+
+
 DROP TABLE IF EXISTS department;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS employee;
@@ -17,10 +22,14 @@ CREATE TABLE role (
  CONSTRAINT fk_dept FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE SET NULL
 );
 
-id: INT PRIMARY KEY
+CREATE TABLE employee (
+id INTEGER AUTO_INCREMENT PRIMARY KEY,
+first_name VARCHAR(30) NOT NULL,
+last_name VARCHAR(30) NOT NULL,
+role_id INTEGER NOT NULL,
+manager_id INTEGER ,
+CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES role(id),
+CONSTRAINT fk_mngid FOREIGN KEY (manager_id) REFERENCES employee(id)
 
-title: VARCHAR(30) to hold role title
+);
 
-salary: DECIMAL to hold role salary
-
-department_id: INT to hold reference to department role belongs to
