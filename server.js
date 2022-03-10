@@ -86,5 +86,19 @@ function viewAllRoles() { // get the roles from the table
 }
 
 
+// View All Employees
+function viewAllEmployees() { 
+  let query = `SELECT e.id AS id, e.first_name AS first_name, e.last_name AS last_name, role.title AS title, department.name AS department, role.salary AS salary, concat(m.first_name, ' ', m.last_name) AS manager
+  FROM employee e
+  LEFT JOIN role ON e.role_id = role.id 
+  LEFT JOIN department on role.department_id = department.id 
+  LEFT JOIN employee m ON m.id = e.manager_id`
+
+  connection.query(query, function(err, res) {
+      if (err) throw err; // throws an error if there is an incorrect prompt
+      console.table(res); // results are shown in a table form
+      askUser(); 
+  })
+}
 
  
