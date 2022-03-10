@@ -49,7 +49,7 @@ const askUser = () => {
                 addRole();
                 break; // show what they asked for 
 
-            case "Add an Employee":
+            case "Add Employee":
                 addEmployee();
                 break; // show what they asked for 
 
@@ -150,4 +150,83 @@ function addDepartment() {
       });
     })
 };
+
+
+// Add a new employee
+
+function addEmployee() {
+    connection.query('SELECT * FROM role', function (err, res) {
+        if (err) throw err; 
+        let roleList = []; 
+    
+        res.forEach(role => {
+            roleList.push({ name: role.title, value: role.id }); // Gives you a list of the roles that you can choose from 
+
+    }); 
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'newEmployeeFirstName',
+            message: 'What is the first name of the new employee?'
+        },
+        {
+            type: 'input',
+            name:'newEmployeeLastName',
+            message: 'What is the last name of the new employee?'
+        },
+        {
+            type: 'list',
+            name: 'newEmployeeRole', 
+            message: 'What is the new employees role in the company?',
+            choices: roleList
+        },
+        {
+            type: 'input',
+            name: 'newEmployeeManager', 
+            message: 'What is the ID of the Manager who they will work under? (Please enter an ID 1-10)',
+        }
+    ])
+    .then(function(answer) {
+        connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [answer.newEmployeeFirstName, answer.newEmployeeLastName, answer.newEmployeeRole, answer.newEmployeeManager], function (err, res) { // this will show the name of the people in the list first last and the role which will get the salary of the role etc. 
+            if (err) throw err;
+            console.table("New Employee is added to the business!"); 
+            askUser(); // prompt to ge back to the beginning
+        });
+    });
+});
+}
+
+
+// Update an Employee Role
+function updateEmployeeRole() {
+    connection.query('SELECT * FROM role', function (err, res) {
+        if (err) throw err;
+        let roleList = [];
+        res.forEach(role => {
+            roleList.push({ name: role.title, value: role.id });
+    });
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'updateEmployeeId',
+            message: 'What is the ID of the employee you are trying to change?', 
+            // choices: employeeList
+        },
+        {
+            type: 'list',
+            name: 'updateNewEmployeeRole', // you can choose the new role from the list and it will be changed in the table
+            message: 'What is the new role of the employee\n\n?',
+            choices: roleList
+        }
+    ])
+    .then(function(answer) {
+        console.log(answer)
+        connection.query("UPDATE employee SET role_id=? WHERE id =?", [answer.updateNewEmployeeRole, answer.updateEmployeeId], function (err, res) { // it takes your answers and changes them in the tables, just hit view employees and that will change
+        if (err) throw err; 
+            console.log('Updated Employee Role!!\n\n')
+            askUser();
+        });
+    });
+});
+}
  
