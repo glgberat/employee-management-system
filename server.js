@@ -41,7 +41,7 @@ const askUser = () => {
                 viewAllEmployees();
                 break; // show what they asked for 
 
-            case "Add a Department":
+            case "Add Department":
                 addDepartment();
                 break; // show what they asked for 
 
@@ -101,4 +101,22 @@ function viewAllEmployees() {
   })
 }
 
+
+function addDepartment() {
+    inquirer.prompt([ // this is having a different prompt from the viewing because have the ability to input a new department in this particular case
+        {
+            type: 'input', // this response allows you to 
+            name: 'newDepartmentName', // new name of the department
+            message: 'What is the name of the new Department?', // coming up from the name of the department 
+        }   
+  ]).then(function(res) {
+        var query = connection.query( 
+            'INSERT INTO department SET ? ', // inserts into the department table
+            { name: res.newDepartmentName}, 
+            function(err){if (err) throw err;  
+            console.table(res);
+            askUser(); // goes back to the prompt at the beginning
+            })
+    })
+  }
  
