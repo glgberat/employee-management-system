@@ -45,7 +45,7 @@ const askUser = () => {
                 addDepartment();
                 break; // show what they asked for 
 
-            case "Add a Role":
+            case "Add Role":
                 addRole();
                 break; // show what they asked for 
 
@@ -57,7 +57,7 @@ const askUser = () => {
                 updateEmployeeRole();
                 break; // show what they asked for 
 
-            case 'Exit Application':
+            case 'Exit':
                 connection.end(); // Quit the application 
                 break;
         }
@@ -119,4 +119,35 @@ function addDepartment() {
             })
     })
   }
+
+  //Add a Role
+
+  function addRole() {
+    inquirer .prompt ([
+        {
+            type: 'input',
+            name: 'newRoleTitle',
+            message: 'Enter the new role title:',
+        },
+        {
+            type: 'input',
+            name: 'newRoleSalary',
+            message: 'Please enter the salary for the new role!' 
+            
+        },
+        {
+            type: 'input', 
+            name: 'newRoleDepartment', 
+            message: 'What is the department ID for the new role?', 
+        },
+      ])
+      
+      .then(function(answer) { 
+        connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [answer.newRoleTitle, answer.newRoleSalary, answer.newRoleDepartment], function (err, res) {
+          if (err) throw err;
+          console.table("A new role was added!");
+          askUser();
+      });
+    })
+};
  
