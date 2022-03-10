@@ -65,5 +65,26 @@ const askUser = () => {
 }
 
 
+// View all Departments 
+
+function viewAllDepartments() {
+  connection.query('SELECT * FROM department', function (err, res) {
+      if (err) throw err; // errors 
+      console.table(res); // the result will be shown in tables
+      askUser();
+  });
+}
+
+
+// View all Roles
+function viewAllRoles() { // get the roles from the table
+  connection.query('SELECT *  FROM role;', function (err, res, fields) {
+      if (err) throw err; // this will just throw an err
+      console.table(res);
+      askUser();
+  })
+}
+
+
 
  
